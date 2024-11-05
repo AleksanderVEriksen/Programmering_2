@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.Date;
+
+public class NaturalSatellite extends CelestialBody {
+    public double semiMajorAxis;
+    public double eccentricity;
+    private int orbitalPeriod;
+    private Star centralCelestialBody;
+    private static final int AU = 149597871;
+
+    public NaturalSatellite(String name, double radius, double mass, double semiMajorAxis, double eccentricity, int orbitalPeriod, Star centralCelestialBody) {
+        super(name, radius, mass);
+        this.semiMajorAxis = semiMajorAxis;
+        this.eccentricity = eccentricity;
+        this.orbitalPeriod = orbitalPeriod;
+        this.centralCelestialBody = centralCelestialBody;
+    }
+ @Override
+ public String toString(){
+        return super.toString() + " SemiMajorAxis: " + semiMajorAxis + " Eccentricity: " + eccentricity + " OrbitalPeriod: " + orbitalPeriod;
+ }
+  public int distanceToCentralBody(double degrees){
+            double rad = Math.toRadians(degrees);                // får inn et tall som argument
+            double a = semiMajorAxis;                            // Blir gjort om til radianer
+            double e = eccentricity;
+            double r = (a*(1-Math.pow(e,2)))/(1+e*Math.cos(rad));    // Formel der radianene blir gjort til cos
+
+            return (int) (r*AU);                             //Returnere svar i int
+ }
+ public int distanceToCentralBodytoRadians(double radians) {
+        double rad = Math.toDegrees(radians);                     // Radianer som argument, gjør om radian inputen til grader, for så å sende den gjennom distanceToCentralBody
+        return (int)(distanceToCentralBody(rad));                 // Gjør return til int slik at den
+    }
+
+
+    public double orbitingVelocity(double distance){
+        double v;                  //hastigheten i m/s
+        final double G = 0.00000000006674;    //Gravitational constant
+        double M = centralCelestialBody.getMass();       //massen til "central body", altså objektet den naturlige satelitten sirkler rundt
+        double  r = distanceToCentralBody(distance)*Math.pow(10,3);                                      //avstanden i meter
+        v = (Math.sqrt((G*M)/r))/1000;                    //Returnere i km/s
+        //System.out.println( G + " " + M + " " + r + " " + distance + " " + Math.sqrt((G*M)/r) + " " + conVert);
+        return v;
+    }
+
+    public  int orbitingVelocityInMs(double degrees){
+       int ms = (int)(orbitingVelocity(degrees)*1000);         //Bruker metoden over og ganger den med 1000 slik at vi får m/s
+       return ms;
+    }
+
+    public double getSemiMajorAxis(){ return semiMajorAxis;}
+public double getEccentricity(){ return eccentricity;}
+public int getOrbitalPeriod(){ return orbitalPeriod;}
+public CelestialBody getCentralCelestialBody(){ return centralCelestialBody;}
+
+public void setSemiMajorAxis(double semiMajorAxis){ this.semiMajorAxis = semiMajorAxis;}
+public void setEccentricity(double eccentricity){this.eccentricity = eccentricity;}
+public void setOrbitalPeriod(int orbitalPeriod){this.orbitalPeriod = orbitalPeriod;}
+public void setCentralCelestialBody(Star centralCelestialBody){this.centralCelestialBody = centralCelestialBody;}
+}

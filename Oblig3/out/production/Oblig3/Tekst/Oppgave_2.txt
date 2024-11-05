@@ -1,0 +1,44 @@
+---------getSurfaceGravity()-------------------
+
+public double getSurfaceGravity() {
+    final double g = 0.00000000006674;
+    double r = radius * 1000;
+    return (g * mass) / Math.pow(r, 2);
+  }
+
+Helt den samme
+
+---------getSmallestPlanet()--------------------
+
+Planet getMin() {
+    Collections.sort(planets);
+    return (Planet) planets.get(0);
+  }
+
+
+@Override
+  public int compareTo(Object obj) {
+    Planet planet = (Planet) obj;
+
+    if (radius > planet.radius) {return 1;}
+    if (radius < planet.radius) {return -1;}
+    if (mass == planet.mass) {return 0;}
+    if (mass > planet.mass) {return 1;}
+    return -1;
+
+    // 1. Returner tallet 1 om denne planeten er større enn den som kommer inn som argument
+    // 2 Returner tallet -1 om denne planeten er større enn den som kommer inn som argument
+    // 3. Retuner tallet 0 om planete er like store. Done.
+  }
+
+
+
+
+---------getMassinMSun()-------------------
+
+public double getMsun() {
+    final double oneMsun = 1.98892E30;
+    return oneMsun / super.mass;
+  }
+
+Så og si gjort det samme, eneste forskjell var at jeg skrev verdien i variablen Msun ved bruk av Math.pow og at jeg ikke skrev super.mass.

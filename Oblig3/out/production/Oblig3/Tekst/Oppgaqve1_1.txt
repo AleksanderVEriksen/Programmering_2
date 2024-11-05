@@ -1,0 +1,73 @@
+--Refraktorere--
+Refraktorering vil si at du vil ha så lite dupliserbar kode som mulig.
+Eksempel på dette kan være at du extender fra en klasse som er abstrakt.
+Den abstrakte klassen vil da inneholde variabler og metoder som også skal være et annet sted, men istede for å skrive det flere ganger så arver underklassen fra den.
+
+Eks: class abstract Person{
+	private String etternavn;
+	private String name;
+
+	public Person(String name, String etternavn){
+		this.name = name;	
+		this.etternavn = etternavn;
+	}
+	get/set metoder etc	
+}
+
+    class tyv extends Person{
+	
+	public tyv(String name, String etternavn){
+		super(name,etternavn);
+	}
+} 
+Istede for at vi da skriver inn variablene name og etternavn i tyv, så arver vi de istede. Dette gjør at når vi bruker konstruktøren til tyv, så får vi at vi skal skrive inn name og etternavn. 
+
+--Static(variabel,metode)--
+Bruk av variabler eller metoder i en klasse uten at vi lager et objekt.
+
+Variabler: private static int tall = 0;  Alle objektene du lager etter vil ha den samme verdien som variabelen er. De får ikke noen egen verdi, selvom de har en egen instanse.
+Metode: En statisk metode, er en metode som vil oppdatere seg eller være den samme uavhengig av objektene som er laget for klassen.
+
+Eks:
+class calc{
+	static int count = 0;
+	calc(){                   //konstruktør
+		count++;          //Legger til 1 i count
+	}
+}
+calc s = new calc();     // Gir 1
+calc f = new calc();     // Gir 2
+
+Uten static ville count begynt på 0 for begge og lagt til 1 i initialiseringen slik at begge hadde vært 1.
+
+--Final (variabel, metode, klasse)--
+
+Variabel: Kan ikke endres etter den er initialisert.
+metode: Kan ikke @override fra den
+Klasse: Kan ikke arve fra den
+
+
+--Abstract (klasse, metode)--
+
+Klasse: En klasse som er abstrakt går ikke an å lage et objekt av.
+Eks: class abstract Person{}
+
+Metode: En metode som er abstrakt har ingen return verdi, 
+og klassen som arver fra en abstrakt klasse må bruke denne metoden.
+De må override metoden.
+En vanlig klasse kan bare extende fra en abstrakt klasse.
+Klassen som lager en abstrakt metode må være abstrakt.
+
+Eks: public abstract int getAlder(LocalDate fodselsdato);
+
+--Interface--
+
+Har ingen implementasjon selv, så klasser kan implementere et interface.
+Et interface kan kun inneholde abstrakte metoder. 
+Eks: 
+public interface TegnBar {
+    void tegn();
+}
+
+En klasse kan implementere mange interface.
+Variablene vil alltid være public og final.
